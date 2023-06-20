@@ -93,7 +93,7 @@ export default function SearchBar() {
 					ref={searchRef}
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
-					variant="filled"
+					variant="outline"
 					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							searchCities(query);
@@ -105,7 +105,7 @@ export default function SearchBar() {
 						e.preventDefault();
 						searchCities();
 					}}
-					variant="filled">
+					variant="outline">
 					Search
 				</Button>
 			</Flex>

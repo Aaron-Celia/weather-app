@@ -160,7 +160,7 @@ export default function SelectedLocation() {
     }
 	return (
 		<Container maxW="5xl" mt="10">
-			<Heading as="h4">
+			<Heading color='white' as="h4">
 				{selectedCity}{selectedState ? `, ${selectedState}` : null}
 			</Heading>
 			<Tabs variant="soft-rounded" w="100%">
