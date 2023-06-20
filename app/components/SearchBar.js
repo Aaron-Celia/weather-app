@@ -105,6 +105,8 @@ export default function SearchBar() {
 						e.preventDefault();
 						searchCities();
 					}}
+					color='white'
+					mt='3px'
 					variant="outline">
 					Search
 				</Button>
