@@ -11,7 +11,7 @@ export default function Daily() {
 				marginBottom: "8px",
 				justifyContent: "space-around",
 				alignItems: "center",
-				fontSize: "18px",
+				fontSize: "14px",
 				paddingRight: "20px",
 				height: "40px"
 			};
