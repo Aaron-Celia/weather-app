@@ -11,7 +11,7 @@ export default function Daily() {
 				marginBottom: "8px",
 				justifyContent: "space-around",
 				alignItems: "center",
-				fontSize: "14px",
+				fontSize: "18px",
 				paddingRight: "20px",
 				height: "40px"
 			};
@@ -22,7 +22,7 @@ export default function Daily() {
 			};
 
   return (
-      <TableContainer borderRadius='2xl'>
+      <TableContainer mb='8px' borderRadius='2xl'>
         <Table>
           <Thead sx={tableHeadStyle}>
             <Th>Day</Th>
