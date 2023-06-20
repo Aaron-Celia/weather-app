@@ -22,7 +22,7 @@ export default function Daily() {
 			};
 
   return (
-      <TableContainer mt='5' borderRadius='2xl'>
+      <TableContainer borderRadius='2xl'>
         <Table>
           <Thead sx={tableHeadStyle}>
             <Th>Day</Th>

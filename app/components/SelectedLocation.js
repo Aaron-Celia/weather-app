@@ -133,7 +133,7 @@ export default function SelectedLocation() {
 							alignItems="center"
 							height="100%"
 							width="100%">
-							<Heading as="h4">
+							<Heading color='white' as="h4">
                                 Getting your location...
 							</Heading>
 							<Spinner size='lg' />
@@ -149,7 +149,7 @@ export default function SelectedLocation() {
 							alignItems="center"
 							height="100%"
 							width="100%">
-							<Heading as="h4">
+							<Heading color='white' as="h4">
 								Loading weather for {selectedCity}{" "}
 								{selectedState ? `, ${selectedState}...` : null}
 							</Heading>
