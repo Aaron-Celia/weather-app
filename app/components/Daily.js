@@ -22,13 +22,12 @@ export default function Daily() {
 			};
 
   return (
-      <TableContainer>
+      <TableContainer mt='10' borderRadius='2xl'>
         <Table>
           <Thead sx={tableHeadStyle}>
             <Th>Day</Th>
             <Th>Sunrise</Th>
             <Th>Sunset</Th>
-            <Th>Rain (mm/ hour)</Th>
             <Th>High / Low</Th>
           </Thead>
           <Tbody>
@@ -48,7 +47,6 @@ export default function Daily() {
 											<Td fontWeight="bold">{names[day]}</Td>
 											<Td>{sunriseHour}:{sunriseMin}</Td>
 											<Td>{sunsetHour}:{sunsetMin}</Td>
-											<Td>{obj.rain}</Td>
 											<Td>{Math.round(obj.temp.max)} / {Math.round(obj.temp.min)}</Td>
 								</Tr>
               )
