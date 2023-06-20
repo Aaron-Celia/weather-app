@@ -92,6 +92,7 @@ export default function SearchBar() {
 					size="lg"
 					ref={searchRef}
 					value={query}
+					color='white'
 					onChange={(e) => setQuery(e.target.value)}
 					variant="outline"
 					onKeyDown={(e) => {
