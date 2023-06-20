@@ -22,7 +22,7 @@ export default function Daily() {
 			};
 
   return (
-      <TableContainer mb='8px' borderRadius='2xl'>
+      <TableContainer overflow='scroll' mb='8px' borderRadius='2xl'>
         <Table>
           <Thead sx={tableHeadStyle}>
             <Th>Day</Th>
