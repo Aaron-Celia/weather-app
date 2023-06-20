@@ -1,35 +1,37 @@
 "use client";
-import { ChakraProvider } from "@chakra-ui/react";
-import { CacheProvider } from "@emotion/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import {
 	createContext,
 	useContext,
-	Dispatch,
-	SetStateAction,
-	Provider,
 	useState
 } from "react";
-import { extendTheme } from "@chakra-ui/react";
 
-export const theme = extendTheme({
-	colors: {
-		brand: {
-			900: "#40128B",
-			800: "#9336B4",
-			700: "#DD58D6"
-		}
+const theme = extendTheme({
+	styles: {
+		global: () => ({
+			body: {
+				bg: ""
+			}
+		})
 	}
 });
+
 
 const GlobalContext = createContext({
 	selectedCity: "",
 	setSelectedCity: () => "",
-    selectedState: '',
-    setSelectedState: () => '',
-    latitude: 0,
-    setLatitude: () => 0,
-    longitude: 0,
-    setLongitude: () => 0
+	selectedState: "",
+	setSelectedState: () => "",
+	latitude: 0,
+	setLatitude: () => 0,
+	longitude: 0,
+	setLongitude: () => 0,
+    current: {},
+    setCurrent: () => {},
+    hourly: [],
+    setHourly: () => [],
+    daily: [],
+    setDaily: () => []
 });
 
 export default function GlobalContextFunction({ children }) {
@@ -37,14 +39,31 @@ export default function GlobalContextFunction({ children }) {
 	const [selectedState, setSelectedState] = useState("");
 	const [latitude, setLatitude] = useState(0);
 	const [longitude, setLongitude] = useState(0);
+	const [hourly, setHourly] = useState([]);
+	const [daily, setDaily] = useState([]);
+	const [current, setCurrent] = useState(() => {});
 	return (
-		// <CacheProvider>
-			<ChakraProvider theme={theme}>
-				<GlobalContext.Provider value={{ selectedCity, setSelectedCity, selectedState, setSelectedState, latitude, setLatitude, longitude, setLongitude }}>
-					{children}
-				</GlobalContext.Provider>
-			</ChakraProvider>
-		// </CacheProvider>
+		<ChakraProvider theme={theme}>
+			<GlobalContext.Provider
+				value={{
+					selectedCity,
+					setSelectedCity,
+					selectedState,
+					setSelectedState,
+					latitude,
+					setLatitude,
+					longitude,
+					setLongitude,
+                    current,
+                    setCurrent,
+                    hourly,
+                    setHourly,
+                    daily,
+                    setDaily
+				}}>
+				{children}
+			</GlobalContext.Provider>
+		</ChakraProvider>
 	);
 }
 

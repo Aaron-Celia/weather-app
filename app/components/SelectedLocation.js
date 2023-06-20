@@ -1,16 +1,40 @@
 "use client";
+import {
+	Container,
+	Flex,
+	Heading,
+	Spinner,
+	Stack,
+	Tab,
+	TabList,
+	TabPanel,
+	TabPanels,
+	Tabs
+} from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { UseGlobalContext } from "../GlobalContext";
-import { Box, Container, Heading, Text } from "@chakra-ui/react";
+import Current from "./Current";
+import Daily from "./Daily";
+import Hourly from "./Hourly";
 
 export default function SelectedLocation() {
-    const [hourly, setHourly] = useState([]);
-	const [daily, setDaily] = useState([]);
-	const [current, setCurrent] = useState(() => {});
-    const [initialComplete, setInitialComplete] = useState(false)
-    
-    const { selectedCity, setSelectedCity, selectedState, setSelectedState, latitude, setLatitude, longitude, setLongitude } = UseGlobalContext();
+	const [isLoading, setIsLoading] = useState(true);
+	const [locationLoading, setLocationLoading] = useState(true);
+
+	const {
+		selectedCity,
+		setSelectedCity,
+		selectedState,
+		setSelectedState,
+		latitude,
+		setLatitude,
+		longitude,
+		setLongitude,
+		setCurrent,
+		setHourly,
+		setDaily
+	} = UseGlobalContext();
 
 	const findUser = async () => {
 		const res = await axios.get("https://api-bdc.net/data/ip-geolocation", {
@@ -18,13 +42,11 @@ export default function SelectedLocation() {
 				key: process.env.NEXT_PUBLIC_LOCATION_API_KEY
 			}
 		});
-        console.log('findUser res: ', res);
 		const { localityName, principalSubdivision } = res.data.location;
-		const { registeredCountryName } = res.data.network;
 		setLatitude(res.data.location.latitude);
 		setLongitude(res.data.location.longitude);
-        setSelectedCity(localityName);
-        setSelectedState(principalSubdivision)
+		setSelectedCity(localityName);
+		setSelectedState(principalSubdivision);
 	};
 
 	const setData = (response) => {
@@ -74,31 +96,95 @@ export default function SelectedLocation() {
 					lat: latitude,
 					lon: longitude,
 					appid: process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_KEY,
-                    units: 'imperial'
+					units: "imperial"
 				}
 			}
 		);
-        console.log(res);
 		setData(res);
-        setInitialComplete(true);
 	};
-    
+
 	useEffect(() => {
-        console.log('first use effect')
-        findUser();
+		findUser();
 	}, []);
+	useEffect(() => {
+		getWeather();
+        if(latitude && longitude){
+            setLocationLoading(false)
+        }
+	}, [latitude, longitude]);
+
     useEffect(() => {
-        console.log('second useEffect')
-        getWeather();
-        console.log('lat: ', latitude);
-        console.log('lon: ', longitude);
-    }, [latitude, longitude])
+		if (selectedCity && selectedState) {
+			setTimeout(() => {
+				setIsLoading(false);
+			}, 1000);
+		}
+	}, [selectedCity, selectedState]);
+
+	const tabStyle = {
+		color: 'white'
+	}
+
+    if(locationLoading){
+        return (
+					<Container maxW="5xl" mt="10">
+						<Stack
+							justifyContent="center"
+							alignItems="center"
+							height="100%"
+							width="100%">
+							<Heading as="h4">
+                                Getting your location...
+							</Heading>
+							<Spinner size='lg' />
+						</Stack>
+					</Container>
+				);
+    }
+    else if (isLoading && selectedCity && selectedState){
+        return (
+					<Container maxW="5xl" mt="10">
+						<Stack
+							justifyContent="center"
+							alignItems="center"
+							height="100%"
+							width="100%">
+							<Heading as="h4">
+								Loading weather for {selectedCity}{" "}
+								{selectedState ? `, ${selectedState}...` : null}
+							</Heading>
+							<Spinner size="lg"/>
+						</Stack>
+					</Container>
+				);
+    }
 	return (
-    <Container maxW="5xl" mt='10'>
-        <Heading as='h4'>{selectedCity}, {selectedState}</Heading>
-        <Box>
-            <Text as='h4'>Current Weather</Text>
-        </Box>
-    </Container>
-    )
+		<Container maxW="5xl" mt="10">
+			<Heading as="h4">
+				{selectedCity}{selectedState ? `, ${selectedState}` : null}
+			</Heading>
+			<Tabs variant="soft-rounded" w="100%">
+				<TabList
+					w="100%"
+					display="flex"
+					justifyContent="space-between"
+					mt="10px">
+					<Tab sx={tabStyle}>Current</Tab>
+					<Tab sx={tabStyle}>Hourly</Tab>
+					<Tab sx={tabStyle}>Daily</Tab>
+				</TabList>
+				<TabPanels>
+					<TabPanel>
+						<Current />
+					</TabPanel>
+					<TabPanel>
+						<Hourly />
+					</TabPanel>
+					<TabPanel>
+						<Daily />
+					</TabPanel>
+				</TabPanels>
+			</Tabs>
+		</Container>
+	);
 }
