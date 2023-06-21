@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { UseGlobalContext } from "./GlobalContext";
 import SearchBar from "./components/SearchBar";
 import SelectedLocation from "./components/SelectedLocation";
+import LinkedIn from "./components/LinkedIn";
 
 export default function Home() {
 	const { longitude, latitude } = UseGlobalContext();
@@ -17,6 +18,7 @@ export default function Home() {
     }, [longitude, latitude])
 		return (
 			<div className='bg-img'>
+				<LinkedIn />
 				<Container maxW="5xl">
 					<Heading my="30px" p="10px" color="blue.400" textAlign="center">
 						Weather App

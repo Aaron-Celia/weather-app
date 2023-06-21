@@ -10,3 +10,15 @@
   background-repeat: no-repeat;
   z-index: -1;
 }
+
+.linked-in {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.name {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
